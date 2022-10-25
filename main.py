@@ -1,12 +1,12 @@
 import streamlit as st
 import pandas as pd
-
+import pydeck as pdk
 
 
 st.set_page_config(page_title="SeviciMap", page_icon="bike", layout='wide', initial_sidebar_state='auto')
 st.sidebar.title('Sevici Visualization app')
 st.sidebar.image(r"sevici.jpeg", use_column_width=True)
-option = st.sidebar.selectbox('Menu', ['Home','Datos','Visualizacion','Filtrado'])
+option = st.sidebar.selectbox('Menu', ['Home','Datos','Visualizacion','Filtrado','BONUS'])
 df = pd.read_csv('sevicidist.csv').drop('Unnamed: 0',axis = 1)
 df.rename(columns={"LON": "lon", "LAT": "lat",'CAPACITY':'capacity','Distrito':'distrito'}, inplace=True)
 df['capacity']= df['capacity'].astype(int)
@@ -76,3 +76,34 @@ elif option == 'Filtrado':
         st.dataframe(df)
         st.map(df[['lon', 'lat']],use_container_width=False)
 
+elif option == 'BONUS':
+
+
+    st.pydeck_chart(pdk.Deck(
+        map_style=None,
+        initial_view_state=pdk.ViewState(
+            latitude=37.4,
+            longitude=-6,
+            zoom=11,
+            pitch=50,
+        ),
+        layers=[
+            pdk.Layer(
+                'HexagonLayer',
+                data=df,
+                get_position='[lon, lat]',
+                radius=200,
+                elevation_scale=4,
+                elevation_range=[0, 1000],
+                pickable=True,
+                extruded=True,
+            ),
+            pdk.Layer(
+                'ScatterplotLayer',
+                data=df,
+                get_position='[lon, lat]',
+                get_color='[200, 30, 0, 160]',
+                get_radius=200,
+            ),
+        ],
+    ))
