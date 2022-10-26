@@ -30,13 +30,16 @@ if option == 'Home':
     st.markdown(
         'Para investigar un poco mas sobre como construir queries para la api Overpass consultar este [enlace](https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_API_by_Example)')
     st.markdown(
-        'Los datos que nos interasan seran: Longitud, Latitud, Capacidad y el Nombre de la Calle para que podamos construir un dataframe tal que:')
+        'Los datos que nos interasan seran: Longitud, Latitud, Capacidad y el Nombre de la Calle que nos devolverá la api tal que:')
     f = open('sevici.json')
 
     # returns JSON object as
     # a dictionary
     data = json.load(f)
     st.json(data)
+    with st.expander('Ver Explicacion'):
+        st.write('Obtendremos un JSON(diccionario) cuando llamemos a la API, tendremos que iterar sobre los niveles del JSON y construir un dataframe')
+
     st.dataframe(df.head())
     st.markdown('Nuestra aplicacion contendra 3 pestañas principales ')
     st.markdown('''<ul>
