@@ -69,7 +69,7 @@ elif option == 'Filtrado':
         ('Calle', 'Capacidad & Distrito'))
     if menu == 'Capacidad & Distrito':
         capacidades = st.sidebar.radio('Capacidades', ('<20', '>=20'))
-        distritos = st.sidebar.radio('Distritos', list(df.distrito.unique()))
+        distritos = st.sidebar.radio('Distritos', sorted(list(df.distrito.unique())))
         if capacidades == '<20':
             df = df[(df['capacity'] < 20) & (df['distrito'] == distritos)]
             st.map(df[['lon', 'lat']], use_container_width=False)
