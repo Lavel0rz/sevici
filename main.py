@@ -1,11 +1,12 @@
 import streamlit as st
 import pandas as pd
 import pydeck as pdk
+import graphviz
 
 st.set_page_config(page_title="SeviciMap", page_icon="bike", layout='wide', initial_sidebar_state='auto')
 st.sidebar.title('Sevici Visualization app')
 st.sidebar.image(r"sevici.jpeg", use_column_width=True)
-option = st.sidebar.selectbox('Menu', ['Home', 'Datos', 'Visualizacion', 'Filtrado', 'BONUS'])
+option = st.sidebar.selectbox('Menu', ['Home','Problema de Negocio', 'Datos', 'Visualizacion', 'Filtrado', 'BONUS'])
 df = pd.read_csv('sevicidist.csv').drop('Unnamed: 0', axis=1)
 df.rename(columns={"LON": "lon", "LAT": "lat", 'CAPACITY': 'capacity', 'Distrito': 'distrito'}, inplace=True)
 df['capacity'] = df['capacity'].astype(int)
@@ -107,3 +108,30 @@ elif option == 'BONUS':
             ),
         ],
     ))
+elif option == 'Problema de Negocio':
+    st.title('Hipotetico Problema de negocio donde posicionar bicis electricas en sevilla')
+    col1 , col2 = st.columns(2)
+    with col1:
+        graph = graphviz.Digraph()
+        graph.edge('Problema real', 'Hipotesis')
+        graph.edge('Hipotesis', 'Estrategia')
+        graph.edge('Estrategia', 'POC')
+        graph.edge('POC', 'Estrategia')
+        graph.edge('POC','Producto Final')
+        st.graphviz_chart(graph)
+    with col2:
+        graph2 = graphviz.Digraph()
+        graph2.edge('Obtencion de Datos','Investigacion')
+        graph2.edge('Investigacion', 'Consumo API Overpass')
+        graph2.edge('Investigacion', 'Pruebo en Notebooks')
+        graph2.edge('Consumo API Overpass', 'Streamlit.py')
+        graph2.edge('Pruebo en Notebooks', 'Streamlit.py')
+        st.graphviz_chart(graph2)
+
+
+    st.markdown('Una empresa de bicis electricas nos contrata como Data Scientists y el primer proyecto en el que vamos a trabajar consiste en crear'
+                ' un pequeño dashboard de visualizacion para obtener informacion geográfica sobre las estaciones Sevici en Sevilla.'
+                )
+
+
+
