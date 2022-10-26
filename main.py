@@ -12,9 +12,9 @@ df.rename(columns={"LON": "lon", "LAT": "lat", 'CAPACITY': 'capacity', 'Distrito
 df['capacity'] = df['capacity'].astype(int)
 df['distrito'] = df['distrito'].astype(int)
 
-uploaded_file = st.sidebar.file_uploader("Carga tus propios datos", type=['csv'])
-if uploaded_file is not None:
-    df = pd.read_csv(uploaded_file)
+#uploaded_file = st.sidebar.file_uploader("Carga tus propios datos", type=['csv'])
+#if uploaded_file is not None:
+    #df = pd.read_csv(uploaded_file)
 if option == 'Home':
     st.title('Bienvenidos a Sevici Visualization app')
     st.subheader('Obtencion de datos')
