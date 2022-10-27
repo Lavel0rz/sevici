@@ -87,6 +87,17 @@ elif option == 'Filtrado':
         st.map(df[['lon', 'lat']], use_container_width=False)
 
 elif option == 'BONUS':
+    import time
+
+    my_bar = st.progress(100)
+
+    with st.spinner('Initializing map loading'):
+        for percent_complete in range(100):
+            time.sleep(0.05)
+            my_bar.progress(percent_complete + 1)
+
+        st.write('Loading complete!')
+
     st.title('Mapa 3d')
 
     st.pydeck_chart(pdk.Deck(
